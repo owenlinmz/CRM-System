@@ -13,7 +13,7 @@ import com.owen.page.Page;
 
 /**
  * 
- *账单管理
+ *酒店管理
  * @author linn2
  *
  */

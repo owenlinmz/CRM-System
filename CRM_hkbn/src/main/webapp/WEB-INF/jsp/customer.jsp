@@ -60,7 +60,7 @@
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand">客户管理系统 v1.0</a>
+			<a class="navbar-brand">酒店管理系统 v1.0</a>
 		</div>
 
 		<!-- /.navbar-header -->
@@ -82,7 +82,7 @@
 					<li><a href="${pageContext.request.contextPath}/customer/list"
 						class="active"><i class="fa fa-edit fa-fw"></i> 客户管理</a></li>
 					<li><a href="${pageContext.request.contextPath}/bill/list"
-						class="active"><i class="fa fa-dashboard fa-fw"></i> 账单管理</a></li>
+						class="active"><i class="fa fa-dashboard fa-fw"></i> 酒店管理</a></li>
 				</ul>
 			</div>
 		</div>

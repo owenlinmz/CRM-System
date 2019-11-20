@@ -11,7 +11,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
-<title>客户管理系统登录</title>
+<title>酒店管理系统登录</title>
 
 <link href="<%=basePath%>css/bootstrap.min.css" title=""
 	rel="stylesheet" />
