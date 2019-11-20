@@ -30,8 +30,6 @@ public class RoomController {
 	public String list(QueryVo vo, Model model) {
 		Page<Room> page = roomService.selectPageByQueryVo(vo);
 		model.addAttribute("page", page);
-//		model.addAttribute("name", vo.getName());
-//		model.addAttribute("telephone", vo.getTelephone());
 		return "room";
 
 	}
@@ -60,6 +58,13 @@ public class RoomController {
 	@RequestMapping(value = "/add.action")
 	public @ResponseBody String add(Room room) {
 		roomService.addRoom(room);
+		return "OK";
+	}
+
+	// 变更客房状态
+	@RequestMapping(value = "/changeStatus.action")
+	public @ResponseBody String changeStatus(Integer id, String status) {
+		roomService.changeStatus(id, status);
 		return "OK";
 	}
 }

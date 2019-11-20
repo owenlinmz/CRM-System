@@ -62,4 +62,7 @@ public class RoomServiceImpl implements RoomService {
 	public void addRoom(Room room) {
 		roomDao.addRoom(room);
 	}
+
+	// 变更状态
+	public void changeStatus(Integer id, String status) { roomDao.changeStatus(id, status);}
 }

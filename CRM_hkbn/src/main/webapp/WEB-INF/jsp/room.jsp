@@ -178,6 +178,7 @@
                                        onclick="editRoom(${row.id})">修改</a> <a href="#"
                                                                                     class="btn btn-danger btn-xs"
                                                                                     onclick="deleteRoom(${row.id})">删除</a>
+                                    <a href="#" class="btn btn-warning btn-xs" onclick="changeStatus(${row.id}, '${row.status}')">进入维修 / 恢复正常</a>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -391,6 +392,26 @@
     function logout() {
         $.post("<%=basePath%>user/logout.action", function (data) {
         });
+    }
+
+    function changeStatus(id, status) {
+        var msg = '';
+        var successMsg = '';
+        if (status === '正常') {
+            msg = '是否维修该客房？';
+            successMsg = '客房进入维修状态！';
+            newStatus = '维修'
+        }else {
+            msg = '是否恢复该客房？';
+            successMsg = '客房恢复正常状态！';
+            newStatus = '正常'
+        }
+        if (confirm(msg)) {
+            $.post("<%=basePath%>room/changeStatus.action", {"id": id, "status": newStatus}, function (data) {
+                alert(successMsg);
+                window.location.reload();
+            });
+        }
     }
 </script>
 </body>

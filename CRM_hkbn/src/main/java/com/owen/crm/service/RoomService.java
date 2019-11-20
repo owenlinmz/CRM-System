@@ -8,16 +8,18 @@ public interface RoomService {
 
 	Page<Room> selectPageByQueryVo(QueryVo vo);
 	
-	//通过ID查询客户
+	//通过ID查询客房
     Room selectRoomById(Integer id);
 	
-	//修改客户通过ID
-    void updateRoomById(Room bill);
+	//修改客房通过ID
+    void updateRoomById(Room room);
 	
-	//通过ID 删除客户
+	//通过ID 删除客房
     void deleteRoomById(Integer id);
 	
-	//添加客户
-    void addRoom(Room bill);
+	//添加客房
+    void addRoom(Room room);
 
+    // 变更状态
+	void changeStatus(Integer id, String status);
 }

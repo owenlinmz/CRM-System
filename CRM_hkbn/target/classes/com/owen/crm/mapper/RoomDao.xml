@@ -95,4 +95,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values(#{roomNumber}, #{floor}, #{bed}, '正常', #{price}, #{type})
 	</insert>
 
+	<!-- 变更状态 -->
+	<update id="changeStatus">
+		update hotel set `status` = #{status} where `id` = #{id}
+	</update>
+
 </mapper>

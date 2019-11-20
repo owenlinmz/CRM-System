@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.owen.crm.pojo.Room;
 import com.owen.crm.pojo.QueryVo;
+import org.apache.ibatis.annotations.Param;
 
 public interface RoomDao {
 	// 总条数
@@ -23,4 +24,7 @@ public interface RoomDao {
 
 	// 添加客房
 	public void addRoom(Room room);
+
+	// 变更状态
+	public void changeStatus(@Param("id") Integer id, @Param("status") String status);
 }
