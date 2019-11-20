@@ -18,7 +18,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>客户管理系统</title>
+<title>酒店管理系统</title>
 
 <!-- Bootstrap Core CSS -->
 <link href="<%=basePath%>css/bootstrap.min.css" rel="stylesheet">
@@ -81,7 +81,7 @@
 				<ul class="nav" id="side-menu">
 					<li><a href="${pageContext.request.contextPath}/customer/list"
 						class="active"><i class="fa fa-edit fa-fw"></i> 客户管理</a></li>
-					<li><a href="${pageContext.request.contextPath}/bill/list"
+					<li><a href="${pageContext.request.contextPath}/room/list"
 						class="active"><i class="fa fa-dashboard fa-fw"></i> 酒店管理</a></li>
 				</ul>
 			</div>
@@ -103,14 +103,14 @@
 						action="${pageContext.request.contextPath }/customer/list.action"
 						method="post">
 						<div class="form-group">
-							<label for="customerName">客户名称</label> <input type="text"
-								class="form-control" id="customerName" value="${custName }"
-								name="custName">
+							<label for="name">客户名称</label> <input type="text"
+								class="form-control" id="name" value="${name }"
+								name="name">
 						</div>
 						<div class="form-group">
-							<label for="customerPhone">手机号码</label> <input type="text"
-								class="form-control" id="customerPhone" value="${custPhone }"
-								name="custPhone">
+							<label for="telephone">手机号码</label> <input type="text"
+								class="form-control" id="telephone" value="${telephone }"
+								name="telephone">
 						</div>
 						&nbsp;&nbsp;
 						<button type="submit" class="btn btn-primary">查询</button>
@@ -135,31 +135,33 @@
 									<th>客户ID</th>
 									<th>客户名称</th>
 									<th>手机</th>
-									<th>加入时间</th>
+									<th>身份证</th>
+									<th>房间号</th>
 									<th>操作</th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:forEach items="${page.rows}" var="row">
 									<tr>
-										<td>${row.cust_id}</td>
-										<td>${row.cust_name}</td>
-										<td>${row.cust_phone}</td>
-										<td><fmt:formatDate type="date"
-												value="${row.cust_createtime }" /></td>
+										<td>${row.id}</td>
+										<td>${row.name}</td>
+										<td>${row.telephone}</td>
+										<td>${row.identity}</td>
+										<td>${row.roomId}</td>
+<%--										<td><fmt:formatDate type="date"--%>
+<%--												value="${row.cust_createtime }" /></td>--%>
 										<td>
 											<form class="form-inline"
 												action="${pageContext.request.contextPath}/bill/list.action"
 												method="post">
-												<button value="${row.cust_name}" name="custName"
-													type="submit" class="btn btn-primary btn-xs">查询账单</button>
+												<button value="${row.name}" name="name"
+													type="submit" class="btn btn-primary btn-xs">查询入住记录</button>
 												<a href="#" class="btn btn-primary btn-xs"
 													data-toggle="modal" data-target="#customerEditDialog"
-													onclick="editCustomer(${row.cust_id})">修改</a> <a href="#"
+													onclick="editCustomer(${row.id})">修改</a> <a href="#"
 													class="btn btn-danger btn-xs"
-													onclick="deleteCustomer(${row.cust_id})">删除</a>
+													onclick="deleteCustomer(${row.id})">删除</a>
 											</form>
-
 										</td>
 
 									</tr>
@@ -196,19 +198,26 @@
 				</div>
 				<div class="modal-body">
 					<form class="form-horizontal" id="edit_customer_form">
-						<input type="hidden" id="edit_cust_id" name="cust_id" />
+						<input type="hidden" id="edit_id" name="id" />
 						<div class="form-group">
-							<label for="edit_customerName" class="col-sm-2 control-label">客户名称</label>
+							<label for="edit_name" class="col-sm-2 control-label">客户名称</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="edit_customerName"
-									placeholder="客户名称" name="cust_name">
+								<input type="text" class="form-control" id="edit_name"
+									placeholder="客户名称" name="name">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="edit_identity" class="col-sm-2 control-label">身份证</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="edit_identity"
+									   placeholder="身份证" name="identity" disabled>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="edit_phone" class="col-sm-2 control-label">电话号码</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" id="edit_phone"
-									placeholder="电话号码" name="cust_phone">
+									placeholder="电话号码" name="telephone">
 							</div>
 						</div>
 
@@ -241,17 +250,24 @@
 				<div class="modal-body">
 					<form class="form-horizontal" id="add_customer_form">
 						<div class="form-group">
-							<label for="edit_customerName" class="col-sm-2 control-label">客户名称</label>
+							<label for="add_name" class="col-sm-2 control-label">客户名称</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="edit_customerName"
-									placeholder="客户名称" name="cust_name">
+								<input type="text" class="form-control" id="add_name"
+									placeholder="客户名称" name="name">
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="edit_phone" class="col-sm-2 control-label">电话号码</label>
+							<label for="add_identity" class="col-sm-2 control-label">身份证</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="edit_phone"
-									placeholder="电话号码" name="cust_phone">
+								<input type="text" class="form-control" id="add_identity"
+									   placeholder="身份证" name="identity">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="add_phone" class="col-sm-2 control-label">电话号码</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="add_phone"
+									placeholder="电话号码" name="telephone">
 							</div>
 						</div>
 
@@ -290,9 +306,10 @@
 				url:"<%=basePath%>customer/edit.action",
 				data:{"id":id},
 				success:function(data) {  
-					$("#edit_cust_id").val(data.cust_id);
-					$("#edit_customerName").val(data.cust_name);
-					$("#edit_phone").val(data.cust_phone);			
+					$("#edit_id").val(data.id);
+					$("#edit_name").val(data.name);
+					$("#edit_phone").val(data.telephone);
+					$("#edit_identity").val(data.identity);
 				}
 			});
 		}

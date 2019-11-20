@@ -6,13 +6,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 总条数 -->
 	<select id="customerCountByQueryVo" parameterType="QueryVo"
 		resultType="Integer">
-		select count(1) from customer
+		select count(1) from hotel_customer
 		<where>
-			<if test="custName != null and custName != ''">
-				cust_name like "%"#{custName}"%"
+			<if test="name != null and name != ''">
+				`name` like "%"#{name}"%"
 			</if>
-			<if test="custPhone != null and custPhone != ''">
-				cust_phone like "%"#{custPhone}"%"
+			<if test="telephone != null and telephone != ''">
+				telephone like "%"#{telephone}"%"
 			</if>
 
 		</where>
@@ -21,13 +21,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 结果集 -->
 	<select id="selectCustomerListByQueryVo" parameterType="QueryVo"
 		resultType="Customer">
-		select * from customer
+		select * from hotel_customer
 		<where>
-			<if test="custName != null and custName != ''">
-				cust_name like "%"#{custName}"%"
+			<if test="name != null and name != ''">
+				name like "%"#{name}"%"
 			</if>
-			<if test="custPhone != null and custPhone != ''">
-				cust_phone like "%"#{custPhone}"%"
+			<if test="telephone != null and telephone != ''">
+				telephone like "%"#{telephone}"%"
 			</if>
 		</where>
 		limit #{startRow},#{size}
@@ -36,41 +36,42 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 通过ID查询客户 -->
 	<select id="selectCustomerById" parameterType="Integer"
 		resultType="Customer">
-		select * from customer
+		select * from hotel_customer
 		<where>
-			cust_id = #{id}
+			id = #{id}
 		</where>
 	</select>
 
 	<!-- 通过ID修改客户 -->
 	<update id="updateCustomerById" parameterType="Customer">
-		update customer
+		update hotel_customer
 		<set>
-			<if test="cust_name != null and cust_name != ''">
-				cust_name = #{cust_name},
+			<if test="name != null and name != ''">
+				`name` = #{name},
 			</if>
-			<if test="cust_phone != null and cust_phone != ''">
-				cust_phone = #{cust_phone}
+			<if test="telephone != null and telephone != ''">
+				`telephone` = #{telephone},
+			</if>
+			<if test="identity != null and identity != ''">
+				`identity` = #{identity}
 			</if>
 		</set>
 		<where>
-			cust_id = #{cust_id}
+			id = #{id}
 		</where>
 	</update>
 
 	<!-- 通过ID 删除客户 -->
 	<delete id="deleteCustomerById" parameterType="Integer">
 		delete from
-		customer where cust_id = #{value}
+		hotel_customer where id = #{value}
 	</delete>
 
 	<!-- 插入客户 -->
 	<insert id="addCustomer" parameterType="Customer"
-		useGeneratedKeys="true" keyProperty="cust_id">
-		insert into customer
-		(cust_name,cust_phone,cust_createtime)
-		values(#{cust_name},#{cust_phone},now())
-
-
+		useGeneratedKeys="true" keyProperty="id">
+		insert into hotel_customer
+		(`name`, `telephone`, `identity`)
+		values(#{name}, #{telephone}, #{identity})
 	</insert>
 </mapper>

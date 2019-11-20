@@ -33,11 +33,11 @@ public class CustomerServiceImpl implements CustomerService {
 				vo.setStartRow((vo.getPage() - 1) * vo.getSize());
 			}
 			// 不为空且不为空串
-			if (vo.getCustName() != null && !"".equals(vo.getCustName().trim())) {
-				vo.setCustName(vo.getCustName().trim());
+			if (vo.getName() != null && !"".equals(vo.getName().trim())) {
+				vo.setName(vo.getName().trim());
 			}
-			if (vo.getCustPhone() != null && !"".equals(vo.getCustPhone().trim())) {
-				vo.setCustPhone(vo.getCustPhone().trim());
+			if (vo.getTelephone() != null && !"".equals(vo.getTelephone().trim())) {
+				vo.setTelephone(vo.getTelephone().trim());
 			}
 
 			// 总条数

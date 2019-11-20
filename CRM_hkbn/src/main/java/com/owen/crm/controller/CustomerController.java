@@ -31,8 +31,6 @@ public class CustomerController {
 		// 通过两个条件查询分页对象
 		Page<Customer> page = customerService.selectPageByQueryVo(vo);
 		model.addAttribute("page", page);
-		model.addAttribute("custName", vo.getCustName());
-		model.addAttribute("custPhone", vo.getCustPhone());
 		return "customer";
 	}
 

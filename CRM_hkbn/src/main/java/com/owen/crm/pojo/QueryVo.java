@@ -2,75 +2,123 @@ package com.owen.crm.pojo;
 
 public class QueryVo {
 
-	// 客户信息
-	private String custName;
-	private String custPhone;
+    // 客户信息
+    private String name;
+    private String telephone;
+    private String identity;
+    private int roomId;
 
-	// 账单信息
-/*	private Integer custid;
-	private Float billMoney;*/
+    public String getName() {
+        return name;
+    }
 
-	// 当前页
-	private Integer page;
-	// 每页数
-	private Integer size = 10;
-	// 开始行
-	private Integer startRow = 0;
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public Integer getStartRow() {
-		return startRow;
-	}
+    public String getTelephone() {
+        return telephone;
+    }
 
-	public void setStartRow(Integer startRow) {
-		this.startRow = startRow;
-	}
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
 
-	public String getCustName() {
-		return custName;
-	}
+    public String getIdentity() {
+        return identity;
+    }
 
-	public void setCustName(String custName) {
-		this.custName = custName;
-	}
+    public void setIdentity(String identity) {
+        this.identity = identity;
+    }
 
-	public Integer getPage() {
-		return page;
-	}
+    public int getRoomId() {
+        return roomId;
+    }
 
-	public void setPage(Integer page) {
-		this.page = page;
-	}
+    public void setRoomId(int roomId) {
+        this.roomId = roomId;
+    }
 
-	public Integer getSize() {
-		return size;
-	}
 
-	public void setSize(Integer size) {
-		this.size = size;
-	}
+    // 客房信息
+    private String roomNumber;
+    private String floor;
+    private String bed;
+    private String type;
+    private String status;
 
-	public String getCustPhone() {
-		return custPhone;
-	}
+    public String getRoomNumber() {
+        return roomNumber;
+    }
 
-	public void setCustPhone(String custPhone) {
-		this.custPhone = custPhone;
-	}
+    public void setRoomNumber(String roomNumber) {
+        this.roomNumber = roomNumber;
+    }
 
-/*	public Integer getCustid() {
-		return custid;
-	}
+    public String getFloor() {
+        return floor;
+    }
 
-	public void setCustid(Integer custid) {
-		this.custid = custid;
-	}
+    public void setFloor(String floor) {
+        this.floor = floor;
+    }
 
-	public Float getBillMoney() {
-		return billMoney;
-	}
+    public String getBed() {
+        return bed;
+    }
 
-	public void setBillMoney(Float billMoney) {
-		this.billMoney = billMoney;
-	}*/
+    public void setBed(String bed) {
+        this.bed = bed;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    // 当前页
+    private Integer page;
+    // 每页数
+    private Integer size = 10;
+    // 开始行
+    private Integer startRow = 0;
+
+    public Integer getStartRow() {
+        return startRow;
+    }
+
+    public void setStartRow(Integer startRow) {
+        this.startRow = startRow;
+    }
+
+
+    public Integer getPage() {
+        return page;
+    }
+
+    public void setPage(Integer page) {
+        this.page = page;
+    }
+
+    public Integer getSize() {
+        return size;
+    }
+
+    public void setSize(Integer size) {
+        this.size = size;
+    }
+
 
 }

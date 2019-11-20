@@ -4,41 +4,52 @@ import java.util.Date;
 
 public class Customer {
 
-	private Integer cust_id;
-	private String cust_name;
-	private String cust_phone;
-	private Date cust_createtime;
+    private String name;
+    private String telephone;
+    private String identity;
 
-	public Integer getCust_id() {
-		return cust_id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public void setCust_id(Integer cust_id) {
-		this.cust_id = cust_id;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public String getCust_name() {
-		return cust_name;
-	}
+    private int id;
 
-	public void setCust_name(String cust_name) {
-		this.cust_name = cust_name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getCust_phone() {
-		return cust_phone;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setCust_phone(String cust_phone) {
-		this.cust_phone = cust_phone;
-	}
+    public String getTelephone() {
+        return telephone;
+    }
 
-	public Date getCust_createtime() {
-		return cust_createtime;
-	}
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
 
-	public void setCust_createtime(Date cust_createtime) {
-		this.cust_createtime = cust_createtime;
-	}
+    public String getIdentity() {
+        return identity;
+    }
+
+    public void setIdentity(String identity) {
+        this.identity = identity;
+    }
+
+    public int getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(int roomId) {
+        this.roomId = roomId;
+    }
+
+    private int roomId;
 
 }
