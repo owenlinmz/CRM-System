@@ -12,14 +12,18 @@
 	padding:30px 70px!important;
     }
 }
-html,body{
+html{
 	height:100%;
 	width:100%;
-	background: url(../img/loginbg.jpg) no-repeat center top;
-	background-size:150px 150px;
-	perspective:500px;
-	background-color:rgb(255,255,255);
+
 }
+body{
+	background: url(../img/loginbg.jpg) no-repeat center top;
+	background-size:377px 82px;
+	perspective:500px;
+	background-color:rgb(77,129,231);
+}
+
 *{
 		font-family:"仿宋";
 }
