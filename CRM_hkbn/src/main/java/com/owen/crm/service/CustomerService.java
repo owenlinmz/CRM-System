@@ -1,7 +1,5 @@
 package com.owen.crm.service;
 
-
-
 import com.owen.page.Page;
 import com.owen.crm.pojo.Customer;
 import com.owen.crm.pojo.QueryVo;
@@ -28,5 +26,8 @@ public interface CustomerService {
 
     // 更新办理信息
     boolean updateLiveIn(QueryVo vo);
+
+    // 获取客户详情
+    QueryVo getDetail(QueryVo vo);
 }
 

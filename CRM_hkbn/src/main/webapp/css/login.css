@@ -25,7 +25,7 @@ body{
 }
 
 *{
-		font-family:"仿宋";
+		font-family:"Times New Roman";
 }
 .login{
 	width:450px;
@@ -38,7 +38,7 @@ body{
     animation: cc 2s ease-in-out ;
 }
 .login header{
-	
+
     padding: 10px;
     border-bottom: 1px solid #27d;
 }

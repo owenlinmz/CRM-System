@@ -73,4 +73,12 @@ public class CustomerController {
 		return customerService.updateLiveIn(vo);
 	}
 
+	// 获取客户详情
+    @RequestMapping(value = "/getDetail.action")
+    public @ResponseBody QueryVo getDetail(QueryVo vo){
+		QueryVo result = customerService.getDetail(vo);
+		result.setRecordList(result.recordList);
+		return result;
+    }
+
 }

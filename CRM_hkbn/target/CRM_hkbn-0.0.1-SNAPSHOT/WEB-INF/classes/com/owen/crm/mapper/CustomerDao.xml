@@ -3,13 +3,6 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.owen.crm.mapper.CustomerDao">
-	<resultMap id="getLiveNow" type="QueryVo">
-		<result property="inTime" column="inTime"></result>
-		<result property="outTime" column="outTime"></result>
-		<result property="breakfast" column="breakfast"></result>
-		<result property="roomNumber" column="roomNumber"></result>
-	</resultMap>
-
 	<!-- 总条数 -->
 	<select id="customerCountByQueryVo" parameterType="QueryVo"
 		resultType="Integer">
@@ -85,7 +78,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values(#{name}, #{telephone}, #{identity}, 0)
 	</insert>
 
-	<select id="getLiveIn" parameterType="Integer" resultMap="getLiveNow">
+	<select id="getLiveIn" parameterType="Integer" resultType="QueryVo">
 		select hc.id as id,
 		hr.id as recordId,
 		hr.inTime as inTime,

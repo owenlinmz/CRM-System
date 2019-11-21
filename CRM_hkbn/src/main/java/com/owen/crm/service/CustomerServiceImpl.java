@@ -1,6 +1,8 @@
 package com.owen.crm.service;
 
+import com.owen.crm.mapper.RecordDao;
 import com.owen.crm.mapper.RoomDao;
+import com.owen.crm.pojo.Record;
 import com.owen.crm.pojo.Room;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +11,8 @@ import com.owen.page.Page;
 import com.owen.crm.mapper.CustomerDao;
 import com.owen.crm.pojo.Customer;
 import com.owen.crm.pojo.QueryVo;
+
+import java.util.List;
 
 /**
  * 客户管理
@@ -23,6 +27,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
     private RoomDao roomDao;
+
+    @Autowired
+    private RecordDao recordDao;
 
     // 通过Name 查询分页对象
     public Page<Customer> selectPageByQueryVo(QueryVo vo) {
@@ -100,5 +107,25 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setId(vo.getId());
 		updateCustomerById(customer);
 		return true;
+    }
+
+    // 获取客户详情
+    public QueryVo getDetail(QueryVo vo) {
+        Page<Record> page = new Page<Record>();
+        page.setSize(5);
+        vo.setSize(5);
+        // 判断当前页
+        if (vo.getPage() != null) {
+            page.setPage(vo.getPage());
+            vo.setStartRow((vo.getPage() - 1) * vo.getSize());
+        }
+        page.setTotal(recordDao.countRecordByCustomer(vo.getId()));
+        page.setRows(recordDao.getRecordByCustomer(vo));
+        Customer customer = customerDao.selectCustomerById(vo.getId());
+        vo.setName(customer.getName());
+        vo.setIdentity(customer.getIdentity());
+        vo.setTelephone(customer.getTelephone());
+        vo.setRecordList(page);
+        return vo;
     }
 }

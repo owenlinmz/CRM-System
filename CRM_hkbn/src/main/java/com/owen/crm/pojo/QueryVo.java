@@ -1,9 +1,12 @@
 package com.owen.crm.pojo;
 
+import com.owen.page.Page;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class QueryVo {
     private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -29,6 +32,15 @@ public class QueryVo {
     private String breakfast;
     private Integer recordId;
 
+    public Page<Record> recordList;
+
+    public Page<Record> getRecordList() {
+        return recordList;
+    }
+
+    public void setRecordList(Page<Record> recordList) {
+        this.recordList = recordList;
+    }
 
     public Integer getPrice() {
         return price;

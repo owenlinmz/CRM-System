@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.owen.crm.mapper.RecordDao">
+    <select id="getRecordByCustomer" parameterType="QueryVo" resultType="Record">
+        select hr.inTime, hr.outTime, hr.breakfast, hr.price, h.roomNumber from
+        hotel_record as hr inner join hotel as h on customerId = #{id} and hr.roomId = h.id
+        limit #{startRow},#{size}
+    </select>
+
+    <select id="countRecordByCustomer" parameterType="Integer" resultType="Integer">
+        select count(1) from hotel_record where customerId = #{id}
+    </select>
+</mapper>

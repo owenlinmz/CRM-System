@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
+         pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -153,21 +153,24 @@
                                     <%--										<td><fmt:formatDate type="date"--%>
                                     <%--												value="${row.cust_createtime }" /></td>--%>
                                 <td>
-                                    <form class="form-inline"
-                                          action="${pageContext.request.contextPath}/bill/list.action"
-                                          method="post">
-                                        <button value="${row.name}" name="name"
-                                                type="submit" class="btn btn-primary btn-xs">查询入住记录
-                                        </button>
-                                        <a href="#" class="btn btn-primary btn-xs"
-                                           data-toggle="modal" data-target="#customerEditDialog"
-                                           onclick="editCustomer(${row.id})">修改</a> <a href="#"
-                                                                                       class="btn btn-danger btn-xs"
-                                                                                       onclick="deleteCustomer(${row.id})">删除</a>
-                                        <a href="#" class="btn btn-success btn-xs"
-                                           data-toggle="modal" data-target="#getLiveIn"
-                                           onclick="getLiveIn(${row.id})">办理入住</a>
-                                    </form>
+<%--                                    <form class="form-inline"--%>
+<%--                                          action="${pageContext.request.contextPath}/customer/getDetail.action"--%>
+<%--                                          method="post">--%>
+<%--                                        <button value="${row.name}" name="name"--%>
+<%--                                                type="submit" class="btn btn-primary btn-xs">详情--%>
+<%--                                        </button>--%>
+                                    <a href="#" class="btn btn-success btn-xs"
+                                       data-toggle="modal" data-target="#getDetail"
+                                       onclick="getDetail(${row.id})">详情</a>
+                                    <a href="#" class="btn btn-primary btn-xs"
+                                       data-toggle="modal" data-target="#customerEditDialog"
+                                       onclick="editCustomer(${row.id})">修改</a> <a href="#"
+                                                                                   class="btn btn-danger btn-xs"
+                                                                                   onclick="deleteCustomer(${row.id})">删除</a>
+                                    <a href="#" class="btn btn-success btn-xs"
+                                       data-toggle="modal" data-target="#getLiveIn"
+                                       onclick="getLiveIn(${row.id})">办理入住</a>
+<%--                                    </form>--%>
                                 </td>
 
                             </tr>
@@ -347,6 +350,58 @@
     </div>
 </div>
 
+<!-- 获取客户详情 -->
+<div class="modal" tabindex="-1" role="dialog" id="getDetail">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">客户详情</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="name">客户名称</label> <input type="text"
+                                                          class="form-control" id="detailName" value="${detailName}"
+                                                          name="detailName" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="telephone">手机号码</label> <input type="text"
+                                                               class="form-control" id="detailTelephone"
+                                                               value="${detailTelephone}"
+                                                               name="detailTelephone" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="telephone">身份证</label> <input type="text"
+                                                               class="form-control" id="detailIdentity"
+                                                               value="${detailIdentity}"
+                                                               name="detailIdentity" disabled>
+                </div>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>房间号码</th>
+                        <th>入住时间</th>
+                        <th>离开时间</th>
+                        <th>含早餐</th>
+                        <th>每晚价格</th>
+                    </tr>
+                    </thead>
+                    <tbody id="recordList">
+                    </tbody>
+                </table>
+                <div class="col-md-12 text-right">
+                    <owen:page
+                            url="${pageContext.request.contextPath }/customer/getDetail.action"/>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- jQuery -->
 <script src="<%=basePath%>js/jquery.min.js"></script>
 
@@ -445,6 +500,42 @@
                 alert("入住失败，房间正在维修中...");
             }
         });
+    }
+
+    function getDetail(id) {
+        $.ajax({
+            type: "get",
+            url: "<%=basePath%>customer/getDetail.action",
+            data: {"id": id},
+            success: function (data) {
+                console.log("data: "+JSON.stringify(data));
+                $("#detailName").val(data.name);
+                $("#detailTelephone").val(data.telephone);
+                $("#detailIdentity").val(data.identity);
+
+                for(var i = 0; i < data.recordList.rows.length; i ++){
+                    var dataList = [];
+                    var obj = data.recordList.rows[i];
+                    dataList[0] = obj.roomNumber;
+                    dataList[1] = obj.inTime;
+                    dataList[2] = obj.outTime;
+                    dataList[3] = obj.breakfast;
+                    dataList[4] = obj.price;
+                    console.log("dataList: "+JSON.stringify(dataList));
+                    creatTable(dataList, "recordList")
+                }
+
+            }
+        });
+    }
+
+    function creatTable(data, id){
+        var tableData = "<tr>";
+        for(var i = 0; i < data.length; i++){
+            tableData += "<td>" + data[i] + "</td>"
+        }
+        tableData += "</tr>";
+        document.getElementById(id).innerHTML=tableData;
     }
 
 </script>
