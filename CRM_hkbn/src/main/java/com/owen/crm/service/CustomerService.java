@@ -23,5 +23,10 @@ public interface CustomerService {
 	//添加客户
     void addCustomer(Customer customer);
 
+    // 获取入住办理
+    QueryVo getLiveIn(Integer id);
+
+    // 更新办理信息
+    boolean updateLiveIn(QueryVo vo);
 }
 

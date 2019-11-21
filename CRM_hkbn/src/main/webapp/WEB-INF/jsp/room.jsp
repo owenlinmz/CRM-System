@@ -408,8 +408,13 @@
         }
         if (confirm(msg)) {
             $.post("<%=basePath%>room/changeStatus.action", {"id": id, "status": newStatus}, function (data) {
-                alert(successMsg);
-                window.location.reload();
+                if (data){
+                    alert(successMsg);
+                    window.location.reload();
+                } else {
+                    alert("该房间有客人正在入住，无法进入维修");
+                }
+
             });
         }
     }

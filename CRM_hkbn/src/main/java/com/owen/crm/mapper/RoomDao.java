@@ -27,4 +27,10 @@ public interface RoomDao {
 
 	// 变更状态
 	public void changeStatus(@Param("id") Integer id, @Param("status") String status);
+
+	// 通过房间号获取ID
+	public Room selectRoomByNum(String roomNumber);
+
+	// 获取房间入住情况
+	public Integer getRoomLive(Integer id);
 }

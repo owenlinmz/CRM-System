@@ -3,6 +3,13 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.owen.crm.mapper.CustomerDao">
+	<resultMap id="getLiveNow" type="QueryVo">
+		<result property="inTime" column="inTime"></result>
+		<result property="outTime" column="outTime"></result>
+		<result property="breakfast" column="breakfast"></result>
+		<result property="roomNumber" column="roomNumber"></result>
+	</resultMap>
+
 	<!-- 总条数 -->
 	<select id="customerCountByQueryVo" parameterType="QueryVo"
 		resultType="Integer">
@@ -55,6 +62,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="identity != null and identity != ''">
 				`identity` = #{identity}
 			</if>
+			<if test="roomId != null and roomId != ''">
+				`roomId` = #{roomId}
+			</if>
 		</set>
 		<where>
 			id = #{id}
@@ -71,7 +81,53 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="addCustomer" parameterType="Customer"
 		useGeneratedKeys="true" keyProperty="id">
 		insert into hotel_customer
-		(`name`, `telephone`, `identity`)
-		values(#{name}, #{telephone}, #{identity})
+		(`name`, `telephone`, `identity`, `roomId`)
+		values(#{name}, #{telephone}, #{identity}, 0)
 	</insert>
+
+	<select id="getLiveIn" parameterType="Integer" resultMap="getLiveNow">
+		select hc.id as id,
+		hr.id as recordId,
+		hr.inTime as inTime,
+		hr.outTime as outTime,
+		hr.breakfast as breakfast,
+		h.roomNumber as roomNumber
+		from ((hotel_customer as hc inner join hotel as h
+		on hc.id = #{id} and hc.roomId = h.id) left join
+		hotel_record as hr on hr.customerId = hc.id and hr.roomId = h.id) limit 1
+	</select>
+
+	<!-- 插入入住记录 -->
+	<insert id="insertLiveIn" parameterType="QueryVo"
+			useGeneratedKeys="true" keyProperty="id">
+		insert into hotel_record
+		(`customerId`, `roomId`, `inTime`, `outTime`, `breakfast`, `price`)
+		values(#{id}, #{roomId}, #{inTime}, #{outTime}, #{breakfast}, #{price})
+	</insert>
+
+	<!-- 更新入住记录 -->
+	<update id="updateLiveIn" parameterType="QueryVo">
+		update hotel_record
+		<set>
+			<if test="id != null and id != ''">
+				`customerId` = #{id},
+			</if>
+			<if test="roomId != null and roomId != ''">
+				`roomId` = #{roomId},
+			</if>
+			<if test="inTime != null and inTime != ''">
+				`inTime` = #{inTime},
+			</if>
+			<if test="outTime != null and outTime != ''">
+				`outTime` = #{outTime},
+			</if>
+			<if test="breakfast != null and breakfast != ''">
+				`breakfast` = #{breakfast}
+			</if>
+		</set>
+		<where>
+			id = #{recordId}
+		</where>
+	</update>
+
 </mapper>

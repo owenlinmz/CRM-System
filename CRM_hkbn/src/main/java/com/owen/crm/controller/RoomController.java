@@ -63,8 +63,7 @@ public class RoomController {
 
 	// 变更客房状态
 	@RequestMapping(value = "/changeStatus.action")
-	public @ResponseBody String changeStatus(Integer id, String status) {
-		roomService.changeStatus(id, status);
-		return "OK";
+	public @ResponseBody boolean changeStatus(Integer id, String status) {
+		return roomService.changeStatus(id, status);
 	}
 }

@@ -13,7 +13,7 @@ import com.owen.crm.service.CustomerService;
 
 /**
  * 客户管理
- * 
+ *
  * @author linn2
  *
  */
@@ -59,6 +59,18 @@ public class CustomerController {
 	public @ResponseBody String add(Customer customer) {
 		customerService.addCustomer(customer);
 		return "OK";
+	}
+
+	// 获取入住办理信息
+    @RequestMapping(value = "/getLiveIn.action" )
+    public @ResponseBody QueryVo getLiveIn(Integer id) {
+        return customerService.getLiveIn(id);
+    }
+
+    // 办理入住
+	@RequestMapping(value = "/updateLiveIn.action")
+	public @ResponseBody boolean updateLiveIn(QueryVo vo){
+		return customerService.updateLiveIn(vo);
 	}
 
 }

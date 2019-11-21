@@ -21,5 +21,5 @@ public interface RoomService {
     void addRoom(Room room);
 
     // 变更状态
-	void changeStatus(Integer id, String status);
+	boolean changeStatus(Integer id, String status);
 }

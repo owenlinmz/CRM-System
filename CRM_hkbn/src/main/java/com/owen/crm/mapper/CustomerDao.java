@@ -23,5 +23,15 @@ public interface CustomerDao {
 	
 	//添加用户
 	public void addCustomer(Customer customer);
+
+	// 获取入住办理
+	public QueryVo getLiveIn(Integer id);
+
+	// 更新入住信息
+	public void updateLiveIn(QueryVo vo);
+
+	// 插入入住信息
+	public void insertLiveIn(QueryVo vo);
+
 }
 

@@ -178,7 +178,7 @@
                                        onclick="editRoom(${row.id})">修改</a> <a href="#"
                                                                                     class="btn btn-danger btn-xs"
                                                                                     onclick="deleteRoom(${row.id})">删除</a>
-                                    <a href="#" class="btn btn-warning btn-xs" onclick="changeStatus(${row.id}, '${row.status}')">维修/正常</a>
+                                    <a href="#" class="btn btn-warning btn-xs" onclick="changeStatus(${row.id}, '${row.status}')">进入维修 / 恢复正常</a>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -408,8 +408,13 @@
         }
         if (confirm(msg)) {
             $.post("<%=basePath%>room/changeStatus.action", {"id": id, "status": newStatus}, function (data) {
-                alert(successMsg);
-                window.location.reload();
+                if (data){
+                    alert(successMsg);
+                    window.location.reload();
+                } else {
+                    alert("该房间有客人正在入住，无法进入维修");
+                }
+
             });
         }
     }
