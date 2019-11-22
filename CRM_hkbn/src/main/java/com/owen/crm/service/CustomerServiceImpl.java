@@ -86,6 +86,7 @@ public class CustomerServiceImpl implements CustomerService {
         QueryVo result = customerDao.getLiveIn(id);
         if (result == null) {
             QueryVo vo = new QueryVo();
+            vo.setInTime(getTimeString(new Date()));
             vo.setId(id);
             return vo;
         }
@@ -144,7 +145,7 @@ public class CustomerServiceImpl implements CustomerService {
         }
         boolean needUpdateOutTime = false;
         Date now = new Date();
-        float days = 0;
+        double days = 0;
         if (liveResult.getOutTime() != null) {
             days = (liveResult.getOutTime().getTime() - liveResult.getInTime().getTime()) / (float) (1000 * 60 * 60 * 24);
         } else {
@@ -156,9 +157,9 @@ public class CustomerServiceImpl implements CustomerService {
             result.put("result", "false");
             return result;
         }
-        float money = 0;
+        double money = 0;
         if (days > Math.floor(days)) {
-            money = ++days * liveResult.getPrice();
+            money = Math.floor(days)* liveResult.getPrice();
         } else {
             money = days * liveResult.getPrice();
         }
@@ -166,8 +167,7 @@ public class CustomerServiceImpl implements CustomerService {
         result.put("result", "true");
         // 若未填写离开时间则自动补充
         if (needUpdateOutTime) {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-            liveResult.setOutTime(simpleDateFormat.format(now));
+            liveResult.setOutTime(getTimeString(now));
             customerDao.updateLiveIn(liveResult);
         }
 
@@ -175,4 +175,10 @@ public class CustomerServiceImpl implements CustomerService {
         customerDao.getOutRoom(id);
         return result;
     }
+
+    private String getTimeString(Date date){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        return simpleDateFormat.format(date);
+    }
 }
+
