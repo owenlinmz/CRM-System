@@ -11,6 +11,8 @@ import com.owen.crm.pojo.Customer;
 import com.owen.crm.pojo.QueryVo;
 import com.owen.crm.service.CustomerService;
 
+import java.util.HashMap;
+
 /**
  * 客户管理
  *
@@ -80,5 +82,11 @@ public class CustomerController {
 		result.setRecordList(result.recordList);
 		return result;
     }
+
+    // 获取客户退房信息
+	@RequestMapping(value = "/getOutInfo" )
+	public @ResponseBody HashMap getOutInfo(Integer id){
+		return  customerService.getOutInfo(id);
+	}
 
 }

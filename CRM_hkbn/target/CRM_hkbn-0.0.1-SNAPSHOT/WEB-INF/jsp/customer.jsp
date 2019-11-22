@@ -167,8 +167,7 @@
                                        data-toggle="modal" data-target="#getLiveIn"
                                        onclick="getLiveIn(${row.id})">办理入住</a>
                                     <a href="#" class="btn btn-danger btn-xs"
-                                       data-toggle="modal" data-target="#getLiveIn"
-                                       onclick="outRoom(${row.id}, ${row.roomId})">办理退房</a>
+                                       onclick="outRoom(${row.id})">办理退房</a>
 
                                 </td>
 
@@ -390,10 +389,10 @@
                     <tbody id="recordList">
                     </tbody>
                 </table>
-                <div class="col-md-12 text-right">
-                    <owen:page
-                            url="${pageContext.request.contextPath }/customer/getDetail.action"/>
-                </div>
+<%--                <div class="col-md-12 text-right">--%>
+<%--                    <owen:page--%>
+<%--                            url="${pageContext.request.contextPath }/customer/getDetail.action"/>--%>
+<%--                </div>--%>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
@@ -401,6 +400,8 @@
         </div>
     </div>
 </div>
+
+
 <!-- jQuery -->
 <script src="<%=basePath%>js/jquery.min.js"></script>
 
@@ -482,6 +483,9 @@
     }
 
     function formatDate(timestamp) {
+        if (timestamp == null || timestamp === ""){
+            return "空";
+        }
     	var now = new Date(timestamp);
     	return moment(now).format("YYYY-MM-DDTHH:mm");
     }
@@ -503,36 +507,48 @@
             url: "<%=basePath%>customer/getDetail.action",
             data: {"id": id},
             success: function (data) {
-                console.log("data: "+JSON.stringify(data));
+                // console.log("data: "+JSON.stringify(data));
                 $("#detailName").val(data.name);
                 $("#detailTelephone").val(data.telephone);
                 $("#detailIdentity").val(data.identity);
-
+                var finalTable = "";
                 for(var i = 0; i < data.recordList.rows.length; i ++){
                     var dataList = [];
                     var obj = data.recordList.rows[i];
                     dataList[0] = obj.roomNumber;
-                    dataList[1] = obj.inTime;
-                    dataList[2] = obj.outTime;
+                    dataList[1] = formatDate(obj.inTime);
+                    dataList[2] = formatDate(obj.outTime);
                     dataList[3] = obj.breakfast;
                     dataList[4] = obj.price;
-                    console.log("dataList: "+JSON.stringify(dataList));
-                    creatTable(dataList, "recordList")
+                    // console.log("dataList: "+JSON.stringify(dataList));
+                    finalTable +=creatTable(dataList)
                 }
-
+                document.getElementById("recordList").innerHTML=finalTable;
             }
         });
     }
 
-    function creatTable(data, id){
+    function creatTable(data){
         var tableData = "<tr>";
         for(var i = 0; i < data.length; i++){
             tableData += "<td>" + data[i] + "</td>"
         }
         tableData += "</tr>";
-        document.getElementById(id).innerHTML=tableData;
+        return tableData;
     }
 
+    function outRoom(id) {
+        if (confirm('确实要办理退房吗?')) {
+            $.post("<%=basePath%>customer/getOutInfo.action", {"id": id}, function (data) {
+                if (JSON.parse(data.result)){
+                    alert(data.message);
+                    window.location.reload();
+                }else {
+                    alert(data.message);
+                }
+            });
+        }
+    }
 </script>
 
 </body>

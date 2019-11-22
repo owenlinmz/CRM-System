@@ -53,7 +53,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				`telephone` = #{telephone},
 			</if>
 			<if test="identity != null and identity != ''">
-				`identity` = #{identity}
+				`identity` = #{identity},
 			</if>
 			<if test="roomId != null and roomId != ''">
 				`roomId` = #{roomId}
@@ -62,6 +62,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<where>
 			id = #{id}
 		</where>
+	</update>
+
+	<update id="getOutRoom" parameterType="Integer">
+		update hotel_customer set roomId = 0 where id = #{id}
 	</update>
 
 	<!-- 通过ID 删除客户 -->
@@ -84,7 +88,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		hr.inTime as inTime,
 		hr.outTime as outTime,
 		hr.breakfast as breakfast,
-		h.roomNumber as roomNumber
+		h.roomNumber as roomNumber,
+		hr.price as price,
+		h.id as roomId
 		from ((hotel_customer as hc inner join hotel as h
 		on hc.id = #{id} and hc.roomId = h.id) left join
 		hotel_record as hr on hr.customerId = hc.id and hr.roomId = h.id) limit 1

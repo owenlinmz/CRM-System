@@ -33,5 +33,7 @@ public interface CustomerDao {
 	// 插入入住信息
 	public void insertLiveIn(QueryVo vo);
 
+	// 退房专用...
+	public void getOutRoom(Integer id);
 }
 

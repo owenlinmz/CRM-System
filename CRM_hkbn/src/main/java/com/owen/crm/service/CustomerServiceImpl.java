@@ -1,5 +1,8 @@
 package com.owen.crm.service;
 
+import java.text.SimpleDateFormat;
+import java.util.*;
+
 import com.owen.crm.mapper.RecordDao;
 import com.owen.crm.mapper.RoomDao;
 import com.owen.crm.pojo.Record;
@@ -12,7 +15,7 @@ import com.owen.crm.mapper.CustomerDao;
 import com.owen.crm.pojo.Customer;
 import com.owen.crm.pojo.QueryVo;
 
-import java.util.List;
+import java.util.Dictionary;
 
 /**
  * 客户管理
@@ -81,7 +84,7 @@ public class CustomerServiceImpl implements CustomerService {
     // 获取入住办理
     public QueryVo getLiveIn(Integer id) {
         QueryVo result = customerDao.getLiveIn(id);
-        if (result == null){
+        if (result == null) {
             QueryVo vo = new QueryVo();
             vo.setId(id);
             return vo;
@@ -91,22 +94,22 @@ public class CustomerServiceImpl implements CustomerService {
 
     // 入住办理
     public boolean updateLiveIn(QueryVo vo) {
-    	Room room = roomDao.selectRoomByNum(vo.getRoomNumber());
-    	if (!room.getStatus().equals("正常")){
-    	    return false;
+        Room room = roomDao.selectRoomByNum(vo.getRoomNumber());
+        if (!room.getStatus().equals("正常")) {
+            return false;
         }
-    	vo.setRoomId(room.getId());
-    	vo.setPrice(room.getPrice());
+        vo.setRoomId(room.getId());
+        vo.setPrice(room.getPrice());
         if (vo.getRecordId() != null) {
-			customerDao.updateLiveIn(vo);
-        }else {
-        	customerDao.insertLiveIn(vo);
-		}
+            customerDao.updateLiveIn(vo);
+        } else {
+            customerDao.insertLiveIn(vo);
+        }
         Customer customer = new Customer();
         customer.setRoomId(room.getId());
         customer.setId(vo.getId());
-		updateCustomerById(customer);
-		return true;
+        updateCustomerById(customer);
+        return true;
     }
 
     // 获取客户详情
@@ -127,5 +130,48 @@ public class CustomerServiceImpl implements CustomerService {
         vo.setTelephone(customer.getTelephone());
         vo.setRecordList(page);
         return vo;
+    }
+
+    // 获取客户退房数据
+    public HashMap getOutInfo(Integer id) {
+        HashMap<String, String> result = new HashMap<String, String>();
+        QueryVo liveResult = getLiveIn(id);
+        if (liveResult.getRoomId() == null) {
+            result.put("message", "退房失败：该用户没有入住，无法办理退房！");
+            result.put("result", "false");
+            return result;
+        }
+        boolean needUpdateOutTime = false;
+        Date now = new Date();
+        float days = 0;
+        if (liveResult.getOutTime() != null) {
+            days = (liveResult.getOutTime().getTime() - liveResult.getInTime().getTime()) / (float) (1000 * 60 * 60 * 24);
+        } else {
+            days = (now.getTime()- liveResult.getInTime().getTime()) / (float) (1000 * 60 * 60 * 24);
+            needUpdateOutTime = true;
+        }
+        if (days <= 0) {
+            result.put("message", "退房失败：出错！入住时间大于或等于离开时间！");
+            result.put("result", "false");
+            return result;
+        }
+        float money = 0;
+        if (days > Math.floor(days)) {
+            money = ++days * liveResult.getPrice();
+        } else {
+            money = days * liveResult.getPrice();
+        }
+        result.put("message", "退房成功：总消费：" + money + "元！");
+        result.put("result", "true");
+        // 若未填写离开时间则自动补充
+        if (needUpdateOutTime) {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            liveResult.setOutTime(simpleDateFormat.format(now));
+            customerDao.updateLiveIn(liveResult);
+        }
+
+        // 退房客户房间ID设为0  无法使用updateCustomerById把roomId设为0 SQL报错
+        customerDao.getOutRoom(id);
+        return result;
     }
 }

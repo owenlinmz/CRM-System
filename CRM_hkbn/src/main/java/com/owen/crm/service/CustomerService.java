@@ -4,6 +4,8 @@ import com.owen.page.Page;
 import com.owen.crm.pojo.Customer;
 import com.owen.crm.pojo.QueryVo;
 
+import java.util.HashMap;
+
 public interface CustomerService {
 	
 	// 通过四个条件 查询分页对象
@@ -29,5 +31,8 @@ public interface CustomerService {
 
     // 获取客户详情
     QueryVo getDetail(QueryVo vo);
+
+    // 获取客户退房数据
+    HashMap getOutInfo(Integer id);
 }
 

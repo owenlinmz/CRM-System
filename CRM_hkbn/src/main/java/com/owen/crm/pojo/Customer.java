@@ -52,14 +52,14 @@ public class Customer {
         this.identity = identity;
     }
 
-    public int getRoomId() {
+    public Integer getRoomId() {
         return roomId;
     }
 
-    public void setRoomId(int roomId) {
+    public void setRoomId(Integer roomId) {
         this.roomId = roomId;
     }
 
-    private int roomId;
+    private Integer roomId;
 
 }
