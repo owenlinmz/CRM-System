@@ -13,4 +13,7 @@ public interface RecordDao {
     // 通过客户ID获取入住记录总数
     public int countRecordByCustomer(Integer id);
 
+    public Integer recordCountByQueryVo(QueryVo vo);
+
+    List<QueryVo> selectRecordListByQueryVo(QueryVo vo);
 }

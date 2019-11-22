@@ -84,6 +84,8 @@
                            class="active"><i class="fa fa-edit fa-fw"></i> 客户管理</a></li>
                     <li><a href="${pageContext.request.contextPath}/room/list"
                            class="active"><i class="fa fa-dashboard fa-fw"></i> 客房管理</a></li>
+                    <li><a href="${pageContext.request.contextPath}/record/list"
+                           class="active"><i class="fa fa-dashboard fa-fw"></i> 入住信息管理</a></li>
                 </ul>
             </div>
         </div>
@@ -144,11 +146,11 @@
             </div>
         </div>
 
-        <!-- 客户信息列表 -->
+        <!-- 客房信息列表 -->
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading">客户信息列表</div>
+                    <div class="panel-heading">客房信息列表</div>
                     <!-- /.panel-heading -->
                     <table class="table table-bordered table-striped">
                         <thead>

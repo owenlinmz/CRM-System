@@ -12,4 +12,51 @@
     <select id="countRecordByCustomer" parameterType="Integer" resultType="Integer">
         select count(1) from hotel_record where customerId = #{id}
     </select>
+
+    <!-- 总条数 -->
+    <select id="recordCountByQueryVo" parameterType="QueryVo"
+            resultType="Integer">
+        select count(1) from ((hotel_record as hr left join hotel_customer as hc on
+        hr.customerId = hc.id
+        ) left join hotel as h on hr.roomId = h.id)
+        <where>
+            <if test="roomNumber != null and roomNumber != ''">
+                h.roomNumber = #{roomNumber}
+            </if>
+            <if test="type != null and type != ''">
+                and h.`type` like "%"#{type}"%"
+            </if>
+            <if test="name != null and name != ''">
+                and hc.`name` like "%"#{name}"%"
+            </if>
+        </where>
+    </select>
+
+    <!-- 结果集 -->
+    <select id="selectRecordListByQueryVo" parameterType="QueryVo"
+            resultType="QueryVo">
+        select
+        hr.id as id,
+        hc.name as name,
+        hc.telephone as telephone,
+        h.roomNumber as roomNumber,
+        h.type as `type`,
+        hr.inTime as inTime,
+        hr.outTime as outTime
+        from ((hotel_record as hr left join hotel_customer as hc on
+        hr.customerId = hc.id
+        ) left join hotel as h on hr.roomId = h.id)
+        <where>
+            <if test="roomNumber != null and roomNumber != ''">
+                h.roomNumber = #{roomNumber}
+            </if>
+            <if test="type != null and type != ''">
+                and h.`type` like "%"#{type}"%"
+            </if>
+            <if test="name != null and name != ''">
+                and hc.`name` like "%"#{name}"%"
+            </if>
+        </where>
+        limit #{startRow}, #{size}
+    </select>
 </mapper>

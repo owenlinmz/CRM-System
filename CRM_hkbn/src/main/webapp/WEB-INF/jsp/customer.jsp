@@ -83,7 +83,9 @@
                     <li><a href="${pageContext.request.contextPath}/customer/list"
                            class="active"><i class="fa fa-edit fa-fw"></i> 客户管理</a></li>
                     <li><a href="${pageContext.request.contextPath}/room/list"
-                           class="active"><i class="fa fa-dashboard fa-fw"></i> 酒店管理</a></li>
+                           class="active"><i class="fa fa-dashboard fa-fw"></i> 客房管理</a></li>
+                    <li><a href="${pageContext.request.contextPath}/record/list"
+                           class="active"><i class="fa fa-dashboard fa-fw"></i> 入住信息管理</a></li>
                 </ul>
             </div>
         </div>
