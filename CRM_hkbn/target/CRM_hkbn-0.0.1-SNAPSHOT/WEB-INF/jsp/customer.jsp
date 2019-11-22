@@ -166,7 +166,7 @@
                                     <a href="#" class="btn btn-primary btn-xs"
                                        data-toggle="modal" data-target="#getLiveIn"
                                        onclick="getLiveIn(${row.id})">办理入住</a>
-                                    <a href="#" class="btn btn-danger btn-xs"
+                                    <a href="#" class="btn btn-info btn-xs"
                                        onclick="outRoom(${row.id})">办理退房</a>
 
                                 </td>

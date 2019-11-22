@@ -98,6 +98,10 @@ public class CustomerServiceImpl implements CustomerService {
         if (!room.getStatus().equals("正常")) {
             return false;
         }
+        Customer customer = new Customer();
+        customer.setRoomId(room.getId());
+        customer.setId(vo.getId());
+
         vo.setRoomId(room.getId());
         vo.setPrice(room.getPrice());
         if (vo.getRecordId() != null) {
@@ -105,9 +109,6 @@ public class CustomerServiceImpl implements CustomerService {
         } else {
             customerDao.insertLiveIn(vo);
         }
-        Customer customer = new Customer();
-        customer.setRoomId(room.getId());
-        customer.setId(vo.getId());
         updateCustomerById(customer);
         return true;
     }

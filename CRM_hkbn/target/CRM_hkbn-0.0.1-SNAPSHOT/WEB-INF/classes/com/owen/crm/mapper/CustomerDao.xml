@@ -93,7 +93,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		h.id as roomId
 		from ((hotel_customer as hc inner join hotel as h
 		on hc.id = #{id} and hc.roomId = h.id) left join
-		hotel_record as hr on hr.customerId = hc.id and hr.roomId = h.id) limit 1
+		hotel_record as hr on hr.customerId = hc.id and hr.roomId = h.id) order by recordId desc limit 1
 	</select>
 
 	<!-- 插入入住记录 -->
