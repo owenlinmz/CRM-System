@@ -8,6 +8,16 @@ public class Customer {
     private String telephone;
     private String identity;
 
+    public String getRoomNumber() {
+        return roomNumber;
+    }
+
+    public void setRoomNumber(String roomNumber) {
+        this.roomNumber = roomNumber;
+    }
+
+    private String roomNumber;
+
     public int getId() {
         return id;
     }

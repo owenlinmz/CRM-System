@@ -6,10 +6,9 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 public class QueryVo {
-    private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     // 客户信息
     private Integer id;
     private String name;
@@ -73,6 +72,9 @@ public class QueryVo {
 
     public void setInTime(String timeString) {
         try {
+            if (timeString != null || !timeString.equals("")){
+                timeString = timeString.replaceAll("T", " ");
+            }
             this.inTime = dateFormat.parse(timeString);
         } catch (ParseException e) {
             e.printStackTrace();
@@ -86,6 +88,9 @@ public class QueryVo {
 
     public void setOutTime(String timeString){
         try {
+            if (timeString != null || !timeString.equals("")){
+                timeString = timeString.replaceAll("T", " ");
+            }
             this.outTime = dateFormat.parse(timeString);
         } catch (ParseException e) {
             e.printStackTrace();

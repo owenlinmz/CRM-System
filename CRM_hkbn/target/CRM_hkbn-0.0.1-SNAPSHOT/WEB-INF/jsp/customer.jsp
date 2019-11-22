@@ -9,7 +9,7 @@
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
             + path + "/";
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
@@ -83,7 +83,9 @@
                     <li><a href="${pageContext.request.contextPath}/customer/list"
                            class="active"><i class="fa fa-edit fa-fw"></i> 客户管理</a></li>
                     <li><a href="${pageContext.request.contextPath}/room/list"
-                           class="active"><i class="fa fa-dashboard fa-fw"></i> 酒店管理</a></li>
+                           class="active"><i class="fa fa-dashboard fa-fw"></i> 客房管理</a></li>
+                    <li><a href="${pageContext.request.contextPath}/record/list"
+                           class="active"><i class="fa fa-dashboard fa-fw"></i> 入住信息管理</a></li>
                 </ul>
             </div>
         </div>
@@ -109,7 +111,7 @@
                                                               name="name">
                     </div>
                     <div class="form-group">
-                        <label for="telephone">手机号码</label> <input type="text"
+                        <label for="telephone">手机号码</label> <input type="number"
                                                                    class="form-control" id="telephone"
                                                                    value="${telephone }"
                                                                    name="telephone">
@@ -149,28 +151,25 @@
                                 <td>${row.name}</td>
                                 <td>${row.telephone}</td>
                                 <td>${row.identity}</td>
-                                <td>${row.roomId}</td>
+                                <td>${row.roomNumber}</td>
                                     <%--										<td><fmt:formatDate type="date"--%>
                                     <%--												value="${row.cust_createtime }" /></td>--%>
                                 <td>
-<%--                                    <form class="form-inline"--%>
-<%--                                          action="${pageContext.request.contextPath}/customer/getDetail.action"--%>
-<%--                                          method="post">--%>
-<%--                                        <button value="${row.name}" name="name"--%>
-<%--                                                type="submit" class="btn btn-primary btn-xs">详情--%>
-<%--                                        </button>--%>
                                     <a href="#" class="btn btn-success btn-xs"
                                        data-toggle="modal" data-target="#getDetail"
                                        onclick="getDetail(${row.id})">详情</a>
-                                    <a href="#" class="btn btn-primary btn-xs"
+                                    <a href="#" class="btn btn-warning btn-xs"
                                        data-toggle="modal" data-target="#customerEditDialog"
                                        onclick="editCustomer(${row.id})">修改</a> <a href="#"
                                                                                    class="btn btn-danger btn-xs"
                                                                                    onclick="deleteCustomer(${row.id})">删除</a>
-                                    <a href="#" class="btn btn-success btn-xs"
+                                    <a href="#" class="btn btn-primary btn-xs"
                                        data-toggle="modal" data-target="#getLiveIn"
                                        onclick="getLiveIn(${row.id})">办理入住</a>
-<%--                                    </form>--%>
+                                    <a href="#" class="btn btn-danger btn-xs"
+                                       data-toggle="modal" data-target="#getLiveIn"
+                                       onclick="outRoom(${row.id}, ${row.roomId})">办理退房</a>
+
                                 </td>
 
                             </tr>
@@ -211,7 +210,7 @@
                         <label for="edit_name" class="col-sm-2 control-label">客户名称</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="edit_name"
-                                   placeholder="客户名称" name="name">
+                                   placeholder="客户名称" name="name" required>
                         </div>
                     </div>
                     <div class="form-group">
@@ -224,8 +223,8 @@
                     <div class="form-group">
                         <label for="edit_phone" class="col-sm-2 control-label">电话号码</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="edit_phone"
-                                   placeholder="电话号码" name="telephone">
+                            <input type="number" class="form-control" id="edit_phone"
+                                   placeholder="电话号码" name="telephone" required>
                         </div>
                     </div>
 
@@ -270,14 +269,14 @@
                     <div class="form-group">
                         <label for="get_inTime" class="col-sm-2 control-label">入住时间</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="get_inTime"
-                                   placeholder="入住时间" name="inTime">
+                            <input type="datetime-local" class="form-control" id="get_inTime"
+                                   placeholder="入住时间" name="inTime" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="get_outTime" class="col-sm-2 control-label">离开时间</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="get_outTime"
+                            <input type="datetime-local" class="form-control" id="get_outTime"
                                    placeholder="入住时间" name="outTime">
                         </div>
                     </div>
@@ -319,20 +318,20 @@
                         <label for="add_name" class="col-sm-2 control-label">客户名称</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="add_name"
-                                   placeholder="客户名称" name="name">
+                                   placeholder="客户名称" name="name" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="add_identity" class="col-sm-2 control-label">身份证</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="add_identity"
+                            <input type="number" class="form-control" id="add_identity"
                                    placeholder="身份证" name="identity">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="add_phone" class="col-sm-2 control-label">电话号码</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="add_phone"
+                            <input type="number" class="form-control" id="add_phone"
                                    placeholder="电话号码" name="telephone">
                         </div>
                     </div>
@@ -389,15 +388,6 @@
                     </tr>
                     </thead>
                     <tbody id="recordList">
-<%--                    <c:forEach items="${record.rows}" var="row">--%>
-<%--                        <tr>--%>
-<%--                            <td>${row.roomNumber}</td>--%>
-<%--                            <td>${row.inTime}</td>--%>
-<%--                            <td>${row.outTime}</td>--%>
-<%--                            <td>${row.breakfast}</td>--%>
-<%--                            <td>${row.price}</td>--%>
-<%--                        </tr>--%>
-<%--                    </c:forEach>--%>
                     </tbody>
                 </table>
                 <div class="col-md-12 text-right">
@@ -426,6 +416,8 @@
 
 <!-- Custom Theme JavaScript -->
 <script src="<%=basePath%>js/sb-admin-2.js"></script>
+
+<script src="<%=basePath%>js/moment.js"></script>
 
 <script type="text/javascript">
     function editCustomer(id) {
@@ -491,13 +483,7 @@
 
     function formatDate(timestamp) {
     	var now = new Date(timestamp);
-        var year = now.getFullYear();
-        var month = now.getMonth() + 1;
-        var date = now.getDate();
-        var hour = now.getHours();
-        var minute = now.getMinutes();
-        var second = now.getSeconds();
-        return year + "-" + month + "-" + date + " " + hour + ":" + minute + ":" + second;
+    	return moment(now).format("YYYY-MM-DDTHH:mm");
     }
 
     function updateLiveIn() {
@@ -540,14 +526,11 @@
 
     function creatTable(data, id){
         var tableData = "<tr>";
-        for(var i = 0; i < data.length;i++){
-            tableData+="<td>"+data[i]+"</td>"
+        for(var i = 0; i < data.length; i++){
+            tableData += "<td>" + data[i] + "</td>"
         }
-        tableData+="</tr>"
-        console.log("tableData:"+tableData);
+        tableData += "</tr>";
         document.getElementById(id).innerHTML=tableData;
-        console.log("输出成功！")
-        
     }
 
 </script>

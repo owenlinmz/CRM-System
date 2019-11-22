@@ -9,7 +9,7 @@
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
             + path + "/";
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
@@ -84,6 +84,8 @@
                            class="active"><i class="fa fa-edit fa-fw"></i> 客户管理</a></li>
                     <li><a href="${pageContext.request.contextPath}/room/list"
                            class="active"><i class="fa fa-dashboard fa-fw"></i> 客房管理</a></li>
+                    <li><a href="${pageContext.request.contextPath}/record/list"
+                           class="active"><i class="fa fa-dashboard fa-fw"></i> 入住信息管理</a></li>
                 </ul>
             </div>
         </div>
@@ -110,16 +112,16 @@
                                                               name="roomNumber">
                     </div>
                     <div class="form-group">
-                        <label for="floor">楼层</label> <input type="text"
+                        <label for="floor">楼层</label> <input type="number"
                                                                    class="form-control" id="floor"
                                                                    value="${floor}"
-                                                                   name="floor">
+                                                                   name="floor" min="1" max="10">
                     </div>
                     <div class="form-group">
-                        <label for="bed">床位数量</label> <input type="text"
+                        <label for="bed">床位数量</label> <input type="number"
                                                                    class="form-control" id="bed"
                                                                    value="${bed}"
-                                                                   name="bed">
+                                                                   name="bed" min="1" max="3">
                     </div>
                     <div class="form-group">
                         <label for="type">类型</label> <input type="text"
@@ -144,11 +146,11 @@
             </div>
         </div>
 
-        <!-- 客户信息列表 -->
+        <!-- 客房信息列表 -->
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading">客户信息列表</div>
+                    <div class="panel-heading">客房信息列表</div>
                     <!-- /.panel-heading -->
                     <table class="table table-bordered table-striped">
                         <thead>
@@ -225,29 +227,29 @@
                         <label for="edit_type" class="col-sm-2 control-label">房间类型</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" placeholder="房间类型"
-                                   name="type" id="edit_type">
+                                   name="type" id="edit_type" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="edit_floor" class="col-sm-2 control-label">所在楼层</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" placeholder="所在楼层"
-                                   name="floor" id="edit_floor">
+                            <input type="number" class="form-control" placeholder="所在楼层"
+                                   name="floor" id="edit_floor" required min="1" max="10">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="edit_bed" class="col-sm-2 control-label">床位数量</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" placeholder="床位数量"
-                                   name="bed" id="edit_bed">
+                            <input type="number" class="form-control" placeholder="床位数量"
+                                   name="bed" id="edit_bed" required min="1" max="3">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="edit_price" class="col-sm-2 control-label">每睌房间价格</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" placeholder="每睌房间价格"
-                                   name="price" id="edit_price">
+                            <input type="number" class="form-control" placeholder="每睌房间价格"
+                                   name="price" id="edit_price" required>
                         </div>
                     </div>
 
@@ -289,35 +291,35 @@
                         <label for="add_roomNumber" class="col-sm-2 control-label">房间号</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" placeholder="房间号"
-                                   name="roomNumber" id="add_roomNumber">
+                                   name="roomNumber" id="add_roomNumber" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="add_type" class="col-sm-2 control-label">房间类型</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" placeholder="房间类型"
-                                   name="type" id="add_type">
+                                   name="type" id="add_type" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="add_floor" class="col-sm-2 control-label">所在楼层</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" placeholder="所在楼层"
-                                   name="floor" id="add_floor">
+                            <input type="number" class="form-control" placeholder="所在楼层"
+                                   name="floor" id="add_floor" required min="1" max="10">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="add_bed" class="col-sm-2 control-label">床位数量</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" placeholder="床位数量"
-                                   name="bed" id="add_bed">
+                            <input type="number" class="form-control" placeholder="床位数量"
+                                   name="bed" id="add_bed" min="1" max="3">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="add_price" class="col-sm-2 control-label">每睌房间价格</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" placeholder="每睌房间价格"
+                            <input type="number" class="form-control" placeholder="每睌房间价格"
                                    name="price" id="add_price">
                         </div>
                     </div>
