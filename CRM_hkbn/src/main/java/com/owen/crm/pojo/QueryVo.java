@@ -5,6 +5,7 @@ import com.owen.page.Page;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class QueryVo {
@@ -30,6 +31,16 @@ public class QueryVo {
     private Date outTime;
     private String breakfast;
     private Integer recordId;
+
+    public ArrayList<Customer> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(ArrayList<Customer> customers) {
+        this.customers = customers;
+    }
+
+    private ArrayList<Customer> customers = new ArrayList<Customer> ();
 
     public Page<Record> recordList;
 

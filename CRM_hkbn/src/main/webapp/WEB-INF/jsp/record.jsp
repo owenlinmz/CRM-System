@@ -108,20 +108,20 @@
                       method="post">
                     <div class="form-group">
                         <label for="nameFilter">客户姓名</label> <input type="text"
-                                                                   class="form-control" id="nameFilter" value="${name}"
-                                                                   name="name">
+                                                                    class="form-control" id="nameFilter" value="${name}"
+                                                                    name="name">
                     </div>
                     <div class="form-group">
                         <label for="roomNumberFilter">房间号</label> <input type="text"
-                                                             class="form-control" id="roomNumberFilter"
-                                                             value="${roomNumber}"
-                                                             name="roomNumber">
+                                                                         class="form-control" id="roomNumberFilter"
+                                                                         value="${roomNumber}"
+                                                                         name="roomNumber">
                     </div>
                     <div class="form-group">
                         <label for="typeFilter">房间类型</label> <input type="text"
-                                                             class="form-control" id="typeFilter"
-                                                             value="${type}"
-                                                             name="type">
+                                                                    class="form-control" id="typeFilter"
+                                                                    value="${type}"
+                                                                    name="type">
                     </div>
                     <button type="submit" class="btn btn-primary">查询</button>
                 </form>
@@ -159,8 +159,8 @@
                                 <td>${row.inTime}</td>
                                 <td>${row.outTime}</td>
                                 <td><a href="#" class="btn btn-primary btn-xs"
-                                       data-toggle="modal" data-target="#roomEditDialog"
-                                       onclick="editRoom(${row.id})">详情</a>
+                                       data-toggle="modal" data-target="#recordDetail"
+                                       onclick="getDetail(${row.id}, ${row.roomNumber})">详情</a>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -181,7 +181,7 @@
 </div>
 
 <!-- 客户编辑对话框 -->
-<div class="modal fade" id="roomEditDialog" tabindex="-1" role="dialog"
+<div class="modal fade" id="recordDetail" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -190,61 +190,49 @@
                         aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel">修改客房信息</h4>
+                <h4 class="modal-title" id="myModalLabel">入住记录详情</h4>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" id="edit_room_form">
                     <input type="hidden" id="edit_id" name="id"/>
                     <div class="form-group">
-                        <label for="edit_roomNumber" class="col-sm-2 control-label">房间号</label>
+                        <label for="detail_roomNumber" class="col-sm-2 control-label">房间号</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" placeholder="房间号"
-                                   name="roomNumber" id="edit_roomNumber" disabled>
+                                   name="roomNumber" id="detail_roomNumber" disabled>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="edit_type" class="col-sm-2 control-label">房间类型</label>
+                        <label for="detail_type" class="col-sm-2 control-label">房间类型</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" placeholder="房间类型"
-                                   name="type" id="edit_type">
+                                   name="type" id="detail_type" disabled>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="edit_floor" class="col-sm-2 control-label">所在楼层</label>
+                        <label for="detail_nameList" class="col-sm-2 control-label">入住客户</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" placeholder="所在楼层"
-                                   name="floor" id="edit_floor">
+                            <input type="text" class="form-control" placeholder="入住客户"
+                                   name="nameList" id="detail_nameList" disabled>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="edit_bed" class="col-sm-2 control-label">床位数量</label>
+                        <label for="detail_inTime" class="col-sm-2 control-label">入住时间</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" placeholder="床位数量"
-                                   name="bed" id="edit_bed">
+                            <input type="text" class="form-control" placeholder="入住时间"
+                                   name="inTime" id="detail_inTime" disabled>
                         </div>
                     </div>
-
                     <div class="form-group">
-                        <label for="edit_price" class="col-sm-2 control-label">每睌房间价格</label>
+                        <label for="detail_outTime" class="col-sm-2 control-label">离开时间</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" placeholder="每睌房间价格"
-                                   name="price" id="edit_price">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="edit_status" class="col-sm-2 control-label">房间状态</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" placeholder="房间状态"
-                                   name="status" id="edit_status" disabled>
+                            <input type="text" class="form-control" placeholder="离开时间"
+                                   name="outTime" id="detail_outTime" disabled>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary"
-                        onclick="updateRoom()">修改客房
-                </button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
             </div>
         </div>
@@ -268,19 +256,17 @@
 <script src="<%=basePath%>js/sb-admin-2.js"></script>
 
 <script type="text/javascript">
-    function editRoom(id) {
+    function getDetail(id, roomNumber) {
         $.ajax({
             type: "get",
-            url: "<%=basePath%>room/edit.action",
-            data: {"id": id},
+            url: "<%=basePath%>record/getDetail.action",
+            data: {"id": id, "roomNumber": roomNumber},
             success: function (data) {
-                $("#edit_id").val(data.id);
-                $("#edit_roomNumber").val(data.roomNumber);
-                $("#edit_type").val(data.type);
-                $("#edit_floor").val(data.floor);
-                $("#edit_bed").val(data.bed);
-                $("#edit_price").val(data.price);
-                $("#edit_status").val(data.status)
+                $("#detail_inTime").val(data.inTime);
+                $("#detail_outTime").val(data.outTime);
+                $("#detail_nameList").val(data.nameList);
+                $("#detail_roomNumber").val(data.roomNumber);
+                $("#detail_type").val(data.type);
             }
         });
     }

@@ -3,6 +3,7 @@ package com.owen.crm.mapper;
 import com.owen.crm.pojo.QueryVo;
 import com.owen.crm.pojo.Record;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -16,4 +17,7 @@ public interface RecordDao {
     public Integer recordCountByQueryVo(QueryVo vo);
 
     List<QueryVo> selectRecordListByQueryVo(QueryVo vo);
+
+    List<QueryVo> getRecordByRoomNumber(Integer roomNumber);
+
 }

@@ -176,7 +176,7 @@ public class CustomerServiceImpl implements CustomerService {
         return result;
     }
 
-    private String getTimeString(Date date){
+    static String getTimeString(Date date){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         return simpleDateFormat.format(date);
     }
