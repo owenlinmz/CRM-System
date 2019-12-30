@@ -2,7 +2,7 @@ FROM tomcat
 
 WORKDIR /usr/local/tomcat/webapps/
 
-ADD ./target/CRM_hkbn-0.0.1-SNAPSHOT.war .
+ADD ./target/crm.war .
 
 EXPOSE 8080
 

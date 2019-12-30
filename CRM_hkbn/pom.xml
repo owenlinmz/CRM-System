@@ -21,6 +21,9 @@
 				</includes>
 			</resource>
 		</resources>
+		<finalName>
+			crm
+		</finalName>
 	</build>
 
 

@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="CRM_hkbn" target="1.5" />
+      <module name="CRM_hkbn" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

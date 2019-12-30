@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.owen.crm.mapper.CustomerDao">
+	<!-- 总条数 -->
+	<select id="customerCountByQueryVo" parameterType="QueryVo"
+		resultType="Integer">
+		select count(1) from hotel_customer
+		<where>
+			<if test="name != null and name != ''">
+				`name` like "%"#{name}"%"
+			</if>
+			<if test="telephone != null and telephone != ''">
+				telephone like "%"#{telephone}"%"
+			</if>
+
+		</where>
+	</select>
+
+	<!-- 结果集 -->
+	<select id="selectCustomerListByQueryVo" parameterType="QueryVo"
+		resultType="Customer">
+		select hc.*, h.roomNumber from hotel_customer as hc left join hotel as h on hc.roomId = h.id
+		<where>
+			<if test="name != null and name != ''">
+				name like "%"#{name}"%"
+			</if>
+			<if test="telephone != null and telephone != ''">
+				telephone like "%"#{telephone}"%"
+			</if>
+		</where>
+		limit #{startRow},#{size}
+	</select>
+
+	<!-- 通过ID查询客户 -->
+	<select id="selectCustomerById" parameterType="Integer"
+		resultType="Customer">
+		select * from hotel_customer
+		<where>
+			id = #{id}
+		</where>
+	</select>
+
+	<!-- 通过ID修改客户 -->
+	<update id="updateCustomerById" parameterType="Customer">
+		update hotel_customer
+		<set>
+			<if test="name != null and name != ''">
+				`name` = #{name},
+			</if>
+			<if test="telephone != null and telephone != ''">
+				`telephone` = #{telephone},
+			</if>
+			<if test="identity != null and identity != ''">
+				`identity` = #{identity},
+			</if>
+			<if test="roomId != null and roomId != ''">
+				`roomId` = #{roomId}
+			</if>
+		</set>
+		<where>
+			id = #{id}
+		</where>
+	</update>
+
+	<update id="getOutRoom" parameterType="Integer">
+		update hotel_customer set roomId = 0 where id = #{id}
+	</update>
+
+	<!-- 通过ID 删除客户 -->
+	<delete id="deleteCustomerById" parameterType="Integer">
+		delete from
+		hotel_customer where id = #{value}
+	</delete>
+
+	<!-- 插入客户 -->
+	<insert id="addCustomer" parameterType="Customer"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into hotel_customer
+		(`name`, `telephone`, `identity`, `roomId`)
+		values(#{name}, #{telephone}, #{identity}, 0)
+	</insert>
+
+	<select id="getLiveIn" parameterType="Integer" resultType="QueryVo">
+		select hc.id as id,
+		hr.id as recordId,
+		hr.inTime as inTime,
+		hr.outTime as outTime,
+		hr.breakfast as breakfast,
+		h.roomNumber as roomNumber,
+		hr.price as price,
+		h.id as roomId
+		from ((hotel_customer as hc inner join hotel as h
+		on hc.id = #{id} and hc.roomId = h.id) left join
+		hotel_record as hr on hr.customerId = hc.id and hr.roomId = h.id) order by recordId desc limit 1
+	</select>
+
+	<!-- 插入入住记录 -->
+	<insert id="insertLiveIn" parameterType="QueryVo"
+			useGeneratedKeys="true" keyProperty="id">
+		insert into hotel_record
+		(`customerId`, `roomId`, `inTime`, `outTime`, `breakfast`, `price`)
+		values(#{id}, #{roomId}, #{inTime}, #{outTime}, #{breakfast}, #{price})
+	</insert>
+
+	<!-- 更新入住记录 -->
+	<update id="updateLiveIn" parameterType="QueryVo">
+		update hotel_record
+		<set>
+			<if test="id != null and id != ''">
+				`customerId` = #{id},
+			</if>
+			<if test="roomId != null and roomId != ''">
+				`roomId` = #{roomId},
+			</if>
+			<if test="inTime != null and inTime != ''">
+				`inTime` = #{inTime},
+			</if>
+			<if test="outTime != null and outTime != ''">
+				`outTime` = #{outTime},
+			</if>
+			<if test="breakfast != null and breakfast != ''">
+				`breakfast` = #{breakfast}
+			</if>
+		</set>
+		<where>
+			id = #{recordId}
+		</where>
+	</update>
+
+</mapper>

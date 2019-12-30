@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" name="CRM_hkbn:war exploded">
-    <output-path>$PROJECT_DIR$/target/CRM_hkbn-0.0.1-SNAPSHOT</output-path>
+    <output-path>$PROJECT_DIR$/target/crm</output-path>
     <properties id="maven-jee-properties">
       <options>
         <exploded>true</exploded>
@@ -42,13 +42,13 @@
           <element id="library" level="project" name="Maven: javax.servlet.jsp:jsp-api:2.1" />
           <element id="library" level="project" name="Maven: junit:junit:4.12" />
           <element id="library" level="project" name="Maven: org.hamcrest:hamcrest-core:1.3" />
-          <element id="file-copy" path="E:/maven/Repository/org/darkphoenixs/log4j/1.2.17/log4j-1.2.17.jar" output-file-name="org.darkphoenixs-log4j-1.2.17.jar" />
+          <element id="file-copy" path="$MAVEN_REPOSITORY$/org/darkphoenixs/log4j/1.2.17/log4j-1.2.17.jar" output-file-name="org.darkphoenixs-log4j-1.2.17.jar" />
           <element id="library" level="project" name="Maven: org.mybatis:mybatis:3.2.7" />
           <element id="library" level="project" name="Maven: org.mybatis:mybatis-spring:1.2.2" />
           <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.8" />
           <element id="library" level="project" name="Maven: org.slf4j:slf4j-log4j12:1.6.6" />
           <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.6.6" />
-          <element id="file-copy" path="E:/maven/Repository/log4j/log4j/1.2.17/log4j-1.2.17.jar" output-file-name="log4j-log4j-1.2.17.jar" />
+          <element id="file-copy" path="$MAVEN_REPOSITORY$/log4j/log4j/1.2.17/log4j-1.2.17.jar" output-file-name="log4j-log4j-1.2.17.jar" />
           <element id="library" level="project" name="Maven: taglibs:standard:1.1.2" />
           <element id="library" level="project" name="Maven: asm:asm:3.3.1" />
           <element id="library" level="project" name="Maven: org.lucee:commons-codec:1.6" />
@@ -68,7 +68,7 @@
         </element>
       </element>
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/target/CRM_hkbn-0.0.1-SNAPSHOT/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/target/crm/META-INF/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="CRM_hkbn/web/Web" />
     </root>

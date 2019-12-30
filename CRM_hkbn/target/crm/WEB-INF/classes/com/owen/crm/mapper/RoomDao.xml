@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.owen.crm.mapper.RoomDao">
+	
+	<!-- //总条数 -->
+	<select id="roomCountByQueryVo" parameterType="QueryVo"
+		resultType="Integer">
+		select count(1) from hotel
+		<where>
+			<if test="roomNumber != null and roomNumber != ''">
+				roomNumber like "%"#{roomNumber}"%"
+			</if>
+			<if test="type != null and type != ''">
+				and type like "%"#{type}"%"
+			</if>
+			<if test="status != null and status != ''">
+                and status like "%"#{status}"%"
+			</if>
+			<if test="floor != null and floor != ''">
+                and floor = #{floor}
+			</if>
+			<if test="bed != null and bed != ''">
+                and bed = #{bed}
+			</if>
+		</where>
+	</select>
+
+	<!-- //结果集 -->
+	<select id="selectRoomListByQueryVo" parameterType="QueryVo"
+		resultType="Room">
+		select * from hotel
+		<where>
+			<if test="roomNumber != null and roomNumber != ''">
+				roomNumber like "%"#{roomNumber}"%"
+			</if>
+			<if test="type != null and type != ''">
+                and type like "%"#{type}"%"
+			</if>
+			<if test="status != null and status != ''">
+                and status like "%"#{status}"%"
+			</if>
+			<if test="floor != null and floor != ''">
+                and floor = #{floor}
+			</if>
+			<if test="bed != null and bed != ''">
+                and bed = #{bed}
+			</if>
+		</where>
+		limit #{startRow},#{size}
+	</select>
+
+	<!-- 通过ID查询客房 -->
+	<select id="selectRoomById" parameterType="Integer"
+		resultType="Room">
+		select * from hotel
+		where id = #{id}
+	</select>
+
+	<!-- 通过ID修改客房 -->
+	<update id="updateRoomById" parameterType="Room">
+		update hotel
+		<set>
+			<if test="type != null and type != ''">
+				`type` = #{type},
+			</if>
+			<if test="floor != null and floor != ''">
+				`floor` = #{floor},
+			</if>
+			<if test="bed != null and bed != ''">
+				`bed` = #{bed},
+			</if>
+			<if test="price != null and price != ''">
+				`price` = #{price},
+			</if>
+		</set>
+		<where>
+			id = #{id}
+		</where>
+	</update>
+
+	<!-- 通过ID删除客房 -->
+	<delete id="deleteRoomById" parameterType="Integer">
+		delete from
+		hotel where
+		id = #{id}
+	</delete>
+
+	<!-- 新增客房 -->
+	<insert id="addRoom" parameterType="Room"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into hotel
+		(`roomNumber`, `floor`, `bed`, `status`, `price`, `type`)
+		values(#{roomNumber}, #{floor}, #{bed}, '正常', #{price}, #{type})
+	</insert>
+
+	<!-- 变更状态 -->
+	<update id="changeStatus">
+		update hotel set `status` = #{status} where `id` = #{id}
+	</update>
+
+	<select id="selectRoomByNum" parameterType="String"
+			resultType="Room">
+		select * from hotel
+		where roomNumber = #{roomNumber} limit 1
+	</select>
+
+	<!-- 获取房间入住情况 -->
+	<select id="getRoomLive" parameterType="Integer" resultType="Integer">
+		select count(1) from hotel_customer where roomId = #{id}
+	</select>
+</mapper>
